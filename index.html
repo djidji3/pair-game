@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        @font-face {
+            font-family: myFont;
+            src: url(fonts/Cyberverse\ Italic.otf );
+        }
+        
+        html {
+            font-size: 16px;
+        }
+        
+        * {
+            box-sizing: border-box;
+        }
+        
+        body {
+            margin: 0;
+            background: rgb(84, 146, 170);
+            font-family: myFont;
+            height: 100%;
+            color: white;
+            text-align: center;
+        }
+        
+        h1,
+        h2 {
+            font-size: 2.3em;
+            text-transform: uppercase;
+        }
+        
+        h3 {
+            font-size: 1.5em;
+            text-transform: uppercase;
+        }
+        
+        #seconds,
+        #mp {
+            font-size: 2em;
+        }
+        
+        #container {
+            margin: 10px auto;
+            width: 630px;
+        }
+        
+        #container::after {
+            content: "";
+            clear: both;
+            display: table;
+        }
+        
+        [data-view="card"] {
+            border: solid 3px #d3cece;
+            border-radius: 7px;
+            cursor: pointer;
+            float: right;
+            height: 140px;
+            margin: 8px;
+            width: 100px;
+        }
+        
+        [data-item="kek"] {
+            background-color: blue;
+        }
+        
+        [data-item="zold"] {
+            background-color: green;
+        }
+        
+        [data-item="piros"] {
+            background-color: red;
+        }
+        
+        [data-item="sarga"] {
+            background-color: yellow;
+        }
+        
+        [data-item="fekete"] {
+            background-color: black;
+        }
+        
+        .felforditott {
+            transition: 1.2s;
+            transform-style: preserve-3d;
+            position: relative;
+            transform: rotateY(0deg);
+        }
+        
+        .leforditott {
+            transition: 1.2s;
+            transform-style: preserve-3d;
+            position: relative;
+            transform: rotateY(180deg);
+            background-image: url(./img/katyaHatlap_102_142.jpg);
+            background-repeat: no-repeat;
+            background-size: 100px, 140px;
+        }
+        
+        .eltalalt {
+            cursor: default;
+            transform-style: preserve-3d;
+            position: relative;
+            transform: rotateY(0deg);
+        }
+        /* Icons */
+    </style>
+</head>
+
+<body>
+
+    <div class="wrapper">
+        <h1>JavaScript pairs Game</h1>
+        <h3>Click any card to begin</h3>
+        <p><span id="seconds">00</span>:<span id="mp">00</span></p>
+        <p id="text"></p>
+        <div id="container">
+            <!-- ide kerulnek a kartyak, js generalja-->
+        </div>
+    </div>
+    <script>
+        "use strict";
+        let myCards = document.getElementById('container');
+
+        let resultsArray = [];
+        let counter = 0;
+        let text = document.getElementById('text');
+        let perc = 0;
+        let mp = 0;
+        /* let appendmp = document.getElementById("mp");
+        let appendperc = document.getElementById("perc"); */
+        let Interval;
+        let images = [
+            'kek',
+            'sarga',
+            'zold',
+            'piros',
+            'fekete'
+        ];
+
+        /* kartyak elkeszitese-minden kartyabol ketto egyforma legyen */
+        let clone = images.slice(0); // csinal egy masolatot a tombbol
+        let cards = images.concat(clone); // az eredeti tombhoz hozzafuzi a masolatot
+
+
+        /* MAIN  */
+        for (let i = 0; i < cards.length; i++) {
+            let card = document.createElement('div');
+            card.dataset.item = cards[i];
+            card.dataset.view = "card";
+            card.className = 'leforditott';
+            myCards.appendChild(card);
+            /* kartyaKeveres(cards); */
+            card.onclick = function() {
+
+                if (this.className != 'felforditott' && this.className != 'eltalalt') {
+                    this.className = 'felforditott';
+                    let result = this.dataset.item;
+                    resultsArray.push(result);
+                    /*   clearInterval(Interval);
+                      Interval = setInterval(startTimer, 10); */
+                }
+
+                if (resultsArray.length > 1) {
+
+                    if (resultsArray[0] === resultsArray[1]) {
+                        changeClass("eltalalt");
+                        counter++;
+                        win();
+                        resultsArray = [];
+                    } else {
+                        changeClass("leforditott");
+                        resultsArray = [];
+                    }
+
+                }
+
+            }
+
+        };
+
+        /* kartya class nevenek lecserelese a parameterkent kapott classnev alapjan */
+        let changeClass = function(className) {
+
+            let leforditottKartyak = document.getElementsByClassName("felforditott");
+            setTimeout(function() {
+
+                for (let i = (leforditottKartyak.length - 1); i >= 0; i--) {
+                    leforditottKartyak[i].className = className;
+                }
+
+            }, 2000);
+
+        }
+
+        /* ellenorzi hogy nyert-e vki es kiirja mennyi ido alatt */
+        let win = function() {
+
+            if (counter === 5) {
+                clearInterval(Interval);
+
+                text.innerText = `Az eltelt idő  ${perc}: ${mp} volt`;
+
+
+            }
+
+        }
+
+        // SEGEDFUGGVENY: kartyak megkeverese
+        function kartyaKeveres(kartyak) {
+            for (let j, x, i = kartyak.length; i; j = Math.floor(Math.random() * i), x = kartyak[--i], kartyak[i] = kartyak[j], kartyak[j] = x);
+            return kartyak;
+        }
+
+
+        /* ora inditasa */
+        function startTimer() {
+            mp++;
+
+            if (mp < 9) {
+                appendmp.innerHTML = "0" + mp;
+            }
+
+            if (mp > 9) {
+                appendmp.innerHTML = mp;
+
+            }
+
+            if (mp > 99) {
+                perc++;
+                appendperc.innerHTML = "0" + perc;
+                mp = 0;
+                appendmp.innerHTML = "0" + 0;
+            }
+
+            if (perc > 9) {
+                appendperc.innerHTML = perc;
+            }
+
+        }
+    </script>
+</body>
+
+</html>
