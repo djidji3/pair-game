@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Datum-stopper</title>
+</head>
+
+<body>
+    <h1>Datum-stopper feladatok</h1>
+    <div class="clock">
+        <div class="clock-face">
+            <!-- itt jelenik meg a datum-ido -->
+        </div>
+        <div class="clock-face-uptodate">
+            <!-- itt jelenik meg  a mp-kent frisulo datum-ido -->
+            00:00
+        </div>
+        <div>
+            <button class="stopIdo">Megallitom az időt</button>
+        </div>
+
+
+    </div>
+
+    <script>
+        /* MAIN fuggveny-visszater a datum es ido megadott mezoivel */
+        const getCurrentTime = () => {
+            /* Az aktualis datum ido-bol indulok ki. Beleteszem egy valtozoba  */
+            const currentDate = new Date();
+
+            const year = currentDate.getFullYear();
+            const month = padNumber(currentDate.getMonth() + 1);
+            const days = padNumber(currentDate.getDay());
+            const hours = padNumber(currentDate.getHours());
+            const minutes = padNumber(currentDate.getMonth());
+            const seconds = padNumber(currentDate.getSeconds());
+            return `${year}-${month}-${days}  ${hours}:${minutes}:${seconds}`;
+        }
+
+        /* SEGEDFUGGVENY - Ha a kapott szam kisebb mint 10, a szam ele tesz egy 0-t */
+        const padNumber = (number) => number < 10 ? `0${number}` : `${number}`;
+
+        /* ebben a html elemben akarom jeleniteni az idot/orat */
+        const clockFace = document.querySelector('.clock-face');
+
+        /* valtozoba teszem a fuggvenyt hogy konnyen meg tudjam hivni */
+        const time = getCurrentTime();
+
+        clockFace.innerText = time;
+        /* az innerText-be beletehetnem direct is a fuggeny visszateresi erteket valtozo hasznalata nelkul*/
+        /*   clockFace.innerText = getCurrentTime(); */
+
+        /* ebben a html elemben jelenitem meg a folyamatosan frissulo idot/orat */
+        const clockFaceUpToDate = document.querySelector('.clock-face-uptodate');
+        clockFaceUpToDate.innerText = time
+
+        /* fuggveny hivas mp-kent - a fuggveny direct beleirasaval megoldva*/
+        setInterval(() => {
+            const time = getCurrentTime();
+
+            const clockFaceUpToDate = document.querySelector('.clock-face-uptodate');
+            clockFaceUpToDate.innerText = time;
+        }, 1000);
+
+        function continuousRunningFunction() {
+            console.log(getCurrentTime());
+        };
+
+        /* fuggveny hivas mp-kent - megadva a fuggvenynevet amit meg kell hivni*/
+        let intervalId = setInterval(() => continuousRunningFunction(), 1000);
+
+        let stopGomb = document.querySelector('.stopIdo');
+
+
+        stopGomb.addEventListener('click', function() {
+            clearInterval(intervalId);
+        });
+    </script>
+</body>
+
+</html>
