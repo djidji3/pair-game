@@ -5,111 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <style>
-        @font-face {
-            font-family: myFont;
-            src: url(fonts/Cyberverse\ Italic.otf );
-        }
-        
-        html {
-            font-size: 16px;
-        }
-        
-        * {
-            box-sizing: border-box;
-        }
-        
-        body {
-            margin: 0;
-            background: rgb(84, 146, 170);
-            font-family: myFont;
-            height: 100%;
-            color: white;
-            text-align: center;
-        }
-        
-        h1,
-        h2 {
-            font-size: 2.3em;
-            text-transform: uppercase;
-        }
-        
-        h3 {
-            font-size: 1.5em;
-            text-transform: uppercase;
-        }
-        
-        #seconds,
-        #mp {
-            font-size: 2em;
-        }
-        
-        #container {
-            margin: 10px auto;
-            width: 630px;
-        }
-        
-        #container::after {
-            content: "";
-            clear: both;
-            display: table;
-        }
-        
-        [data-view="card"] {
-            border: solid 3px #d3cece;
-            border-radius: 7px;
-            cursor: pointer;
-            float: right;
-            height: 140px;
-            margin: 8px;
-            width: 100px;
-        }
-        
-        [data-item="kek"] {
-            background-color: blue;
-        }
-        
-        [data-item="zold"] {
-            background-color: green;
-        }
-        
-        [data-item="piros"] {
-            background-color: red;
-        }
-        
-        [data-item="sarga"] {
-            background-color: yellow;
-        }
-        
-        [data-item="fekete"] {
-            background-color: black;
-        }
-        
-        .felforditott {
-            transition: 1.2s;
-            transform-style: preserve-3d;
-            position: relative;
-            transform: rotateY(0deg);
-        }
-        
-        .leforditott {
-            transition: 1.2s;
-            transform-style: preserve-3d;
-            position: relative;
-            transform: rotateY(180deg);
-            background-image: url(./img/katyaHatlap_102_142.jpg);
-            background-repeat: no-repeat;
-            background-size: 100px, 140px;
-        }
-        
-        .eltalalt {
-            cursor: default;
-            transform-style: preserve-3d;
-            position: relative;
-            transform: rotateY(0deg);
-        }
-        /* Icons */
-    </style>
+    <link rel="stylesheet" href="./css/style.css">
 </head>
 
 <body>
@@ -119,7 +15,7 @@
         <h3>Click any card to begin</h3>
 
         <p class="stopper">00:00</p>
-        <p class="raforditottIdo">Raforditott ido: 00:00</p>
+        <p class="raforditottIdo">Játékidő:</p>
 
         <div id="container">
             <!-- ide kerulnek a kartyak, js generalja-->
@@ -128,7 +24,7 @@
     <script>
         "use strict";
         let myCards = document.getElementById('container');
-        const raforditottIdoElement = document.querySelector('.raforditottIdo');
+        const jatekIdo = document.querySelector('.raforditottIdo');
         let resultsArray = [];
         let counter = 0;
         let stopperStatus = false;
@@ -149,7 +45,7 @@
 
         /* MAIN  */
         /* osszekeverem a kartyakat */
-        kartyaKeveres(cards);
+        /*   kartyaKeveres(cards); */
 
         for (let i = 0; i < cards.length; i++) {
             let card = document.createElement('div');
@@ -198,8 +94,10 @@
         /* ellenorzi hogy nyert-e vki es kiirja mennyi ido alatt, nullazza a szamlalot*/
         let checkwin = function() {
             if (counter === 5) {
-                raforditottIdoElement.innerText = 'A megoldásra forditott idő:' + stopperElement.innerText;
+                jatekIdo.innerText = 'Játékidő: ' + stopperElement.innerText;
                 stopperElement.style.visibility = 'hidden';
+                jatekIdo.style.visibility = 'visible';
+
                 initGame();
             }
         };

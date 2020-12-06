@@ -1,0 +1,101 @@
+@font-face {
+    font-family: myFont;
+    src: url(../fonts/Cyberverse.otf);
+}
+
+html {
+    font-size: 16px;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background: rgb(84, 146, 170);
+    font-family: myFont;
+    height: 100%;
+    color: white;
+    text-align: center;
+}
+
+h1,
+h2 {
+    font-size: 2.3em;
+    text-transform: uppercase;
+}
+
+h3 {
+    font-size: 1.5em;
+    text-transform: uppercase;
+}
+
+#container {
+    margin: 10px auto;
+    width: 630px;
+}
+
+[data-view="card"] {
+    border: solid 3px #d3cece;
+    border-radius: 7px;
+    cursor: pointer;
+    float: right;
+    height: 140px;
+    margin: 8px;
+    width: 100px;
+}
+
+[data-item="kek"] {
+    background-color: blue;
+}
+
+[data-item="zold"] {
+    background-color: green;
+}
+
+[data-item="piros"] {
+    background-color: red;
+}
+
+[data-item="sarga"] {
+    background-color: yellow;
+}
+
+[data-item="fekete"] {
+    background-color: black;
+}
+
+.felforditott {
+    transition: 1.2s;
+    transform-style: preserve-3d;
+    position: relative;
+    transform: rotateY(0deg);
+}
+
+.leforditott {
+    transition: 1.2s;
+    transform-style: preserve-3d;
+    position: relative;
+    transform: rotateY(180deg);
+    background-image: url(../img/katyaHatlap_102_142.jpg);
+    background-repeat: no-repeat;
+    background-size: 100px, 140px;
+}
+
+.eltalalt {
+    cursor: default;
+    transform-style: preserve-3d;
+    position: relative;
+    transform: rotateY(0deg);
+}
+
+.raforditottIdo {
+    visibility: hidden;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 2rem;
+}
+
+.stopper {
+    font-size: 2rem;
+}
