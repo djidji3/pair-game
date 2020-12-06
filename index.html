@@ -17,13 +17,13 @@
         <p class="stopper">00:00</p>
         <p class="raforditottIdo">Játékidő:</p>
 
-        <div id="container">
+        <div class="container">
             <!-- ide kerulnek a kartyak, js generalja-->
         </div>
     </div>
     <script>
         "use strict";
-        let myCards = document.getElementById('container');
+        let myCards = document.querySelector('.container');
         const jatekIdo = document.querySelector('.raforditottIdo');
         let resultsArray = [];
         let counter = 0;
@@ -45,7 +45,7 @@
 
         /* MAIN  */
         /* osszekeverem a kartyakat */
-        /*   kartyaKeveres(cards); */
+        kartyaKeveres(cards);
 
         for (let i = 0; i < cards.length; i++) {
             let card = document.createElement('div');
